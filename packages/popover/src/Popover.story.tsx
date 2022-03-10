@@ -181,7 +181,88 @@ function ScrollExample() {
   );
 }
 
+function ScrollExample2() {
+  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(
+    null,
+  );
+  const [active, setActive] = useState(false);
+  const buttonRef = useRef(null);
+
+  const exampleIsScrollable = boolean('Example page scrolling', false);
+
+  return (
+    <>
+      <div
+        ref={el => setPortalContainer(el)}
+        className={cx(
+          {
+            [css`
+              color: black;
+            `]: exampleIsScrollable,
+          },
+          css`
+            margin: 150px;
+            width: 100%;
+            overflow-y: auto;
+            background-color: #eaeaea;
+            max-height: calc(100vh - 200px);
+            padding: 100px;
+            position: relative;
+          `,
+        )}
+      >
+        <button
+          ref={buttonRef}
+          onClick={() => setActive(curr => !curr)}
+          className={cx(
+            containerStyle,
+            css`
+              margin-bottom: 200vh;
+            `,
+            referenceElPositions[
+              select(
+                'Reference Element Position',
+                ['centered', 'top', 'right', 'bottom', 'left'],
+                'centered',
+              )
+            ],
+          )}
+        >
+          {text('Button Content', 'Popover')}
+        </button>
+      </div>
+
+      {exampleIsScrollable ? (
+        <Popover
+          align={select('Align', Object.values(Align), 'top')}
+          justify={select('justify', Object.values(Justify), 'middle')}
+          spacing={number('spacing', 10)}
+          adjustOnMutation={boolean('adjustOnMutation', true)}
+          portalContainer={portalContainer}
+          scrollContainer={portalContainer}
+          active={active}
+          refEl={buttonRef}
+        >
+          <div className={popoverStyle}>Popover content</div>
+        </Popover>
+      ) : (
+        <Popover
+          align={select('Align', Object.values(Align), 'top')}
+          justify={select('justify', Object.values(Justify), 'middle')}
+          spacing={number('spacing', 10)}
+          adjustOnMutation={boolean('adjustOnMutation', true)}
+          active={active}
+          refEl={buttonRef}
+        >
+          <div className={popoverStyle}>Popover content</div>
+        </Popover>
+      )}
+    </>
+  );
+}
+
 storiesOf('Popover', module)
   .add('Default', () => <DefaultExample />)
   .add('Advanced', () => <AdvancedExample />)
-  .add('Scroll Container', () => <ScrollExample />);
+  .add('Scroll Container', () => <ScrollExample />)
+  .add('Scroll Test', () => <ScrollExample2 />);

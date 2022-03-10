@@ -134,6 +134,9 @@ export function getElementDocumentPosition(
       right: offsetRight,
     } = scrollContainer.getBoundingClientRect();
 
+     // eslint-disable-next-line no-console
+     console.log({top}, {bottom}, {left}, {right});
+
     return {
       top: top + scrollTop - offsetTop,
       bottom: bottom + scrollTop - offsetBottom,
@@ -175,6 +178,9 @@ export function getElementViewportPosition(
       left: offsetLeft,
       right: offsetRight,
     } = scrollContainer.getBoundingClientRect();
+
+    // // eslint-disable-next-line no-console
+    // console.log({top}, {bottom}, {left}, {right});
 
     return {
       top: top - offsetTop,

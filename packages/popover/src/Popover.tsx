@@ -105,6 +105,9 @@ function Popover({
     }
   }
 
+  // eslint-disable-next-line no-console
+  console.log({scrollContainer}, {contentNode}, {referenceElement});
+
   const viewportSize = useViewportSize();
 
   // We calculate the position of the popover when it becomes active,

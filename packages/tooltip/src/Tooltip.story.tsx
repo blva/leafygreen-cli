@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
 import Tooltip, { TriggerEvent, Align, Justify } from '.';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
@@ -31,6 +31,166 @@ function ControlledTooltip() {
         I am a controlled Tooltip!
       </Tooltip>
     </LeafyGreenProvider>
+  );
+}
+
+function ScrolledTooltip() {
+  // const [open, setOpen] = useState(true);
+
+  const scrollContainerRef = useRef(null);
+  const items = Array.from(Array(9).keys());
+  const exampleIsScrollable = boolean('Example page scrolling', false);
+
+  const genItems = tooltipText =>
+    items.map(id => {
+      return (
+        <div
+          key={`Grid-item-${id}`}
+          className={css`
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: white;
+            min-height: 200px;
+            width: 200px;
+            box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+          `}
+        >
+          <div
+            className={css`
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: flex-end;
+              align-self: stretch;
+              padding: 8px;
+            `}
+          >
+            {exampleIsScrollable ? (
+              <Tooltip
+                align="top"
+                justify="middle"
+                // Bug #3: Uncomment line below to observe
+                scrollContainer={scrollContainerRef.current}
+                // Bug #1
+                trigger={
+                  <Button
+                    className="Button"
+                    leftGlyph={<Icon glyph="Ellipsis" />}
+                    size="xsmall"
+                  />
+                }
+                triggerEvent="click"
+                darkMode={true}
+              >
+                {/* Bug #2 */}
+                {tooltipText}
+              </Tooltip>
+            ) : (
+              <Tooltip
+                align="top"
+                justify="middle"
+                // Bug #3: Uncomment line below to observe
+                // scrollContainer={scrollContainerRef.current}
+                // Bug #1
+                trigger={
+                  <Button
+                    className="Button"
+                    leftGlyph={<Icon glyph="Ellipsis" />}
+                    size="xsmall"
+                  />
+                }
+                triggerEvent="hover"
+                darkMode={true}
+              >
+                {/* Bug #2 */}
+                {tooltipText}
+              </Tooltip>
+            )}
+          </div>
+
+          <div
+            className={css`
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: center;
+              flex: 1 1 100%;
+              align-self: stretch;
+              padding: 8px;
+            `}
+          >
+            {id}
+          </div>
+        </div>
+      );
+    });
+
+  return (
+    <div
+      className={cx(
+        {
+          [css`
+            color: black;
+          `]: exampleIsScrollable,
+        },
+        css`
+          display: flex;
+          flex-direction: column;
+          font-family: sans-serif;
+          text-align: center;
+          width: 100vw;
+          height: 100vh;
+          padding: 24px;
+        `,
+      )}
+    >
+      <h1>LeafyGreen Tooltip Bugs</h1>
+      <p>
+        A small sandbox to repro some <code>@leafygreen-ui/tooltip</code> bugs
+        we have seen in Charts. This example uses a minimal amount of consumer
+        app code to scaffold an example app in which to repro the bugs. LG
+        dependencies are set to the versions currently in use within Charts at
+        the time of reporting these bugs.
+      </p>
+
+      <ul>
+        <li>
+          Bug 1: When using a <code>Button</code> with only a{' '}
+          <code>leftGlyph</code> prop, the tooltip adds a{' '}
+          <code>margin-right</code> style to the rendered glyph.
+        </li>
+        <li>
+          Bug 2: Tooltip text renders as expected for targets closer to the
+          left-hand side of the viewport, however targets rendered to the right
+          hand-side are not rendered as expected. The text is wrapped.
+        </li>
+        <li>
+          Bug 3: When defining a <code>scrollContainer</code> prop, the tooltip
+          position gets really screwed up. (Uncomment relevant line in this
+          example)
+        </li>
+      </ul>
+      <div
+        ref={scrollContainerRef}
+        className={css`
+          flex: 1 1 100%;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-rows: 1fr 1fr 1fr;
+          gap: 12px 12px;
+          grid-auto-flow: row;
+          grid-template-areas:
+            '. . .'
+            '. . .'
+            '. . .';
+          overflow: auto;
+        `}
+      >
+        {genItems('Interactive Filters')}
+      </div>
+    </div>
   );
 }
 
@@ -99,4 +259,5 @@ storiesOf('Tooltip', module)
         </div>
       </LeafyGreenProvider>
     );
-  });
+  })
+  .add('scrolled test', () => <ScrolledTooltip />);
