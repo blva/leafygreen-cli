@@ -82,7 +82,7 @@ function ScrolledTooltip() {
                   />
                 }
                 triggerEvent="click"
-                darkMode={true}
+                darkMode={false}
               >
                 {/* Bug #2 */}
                 {tooltipText}
@@ -101,8 +101,8 @@ function ScrolledTooltip() {
                     size="xsmall"
                   />
                 }
-                triggerEvent="hover"
-                darkMode={true}
+                triggerEvent="click"
+                darkMode={false}
               >
                 {/* Bug #2 */}
                 {tooltipText}

@@ -188,18 +188,11 @@ function ScrollExample2() {
   const [active, setActive] = useState(false);
   const buttonRef = useRef(null);
 
-  const exampleIsScrollable = boolean('Example page scrolling', false);
-
   return (
     <>
       <div
         ref={el => setPortalContainer(el)}
-        className={cx(
-          {
-            [css`
-              color: black;
-            `]: exampleIsScrollable,
-          },
+        className={
           css`
             margin: 150px;
             width: 100%;
@@ -208,8 +201,7 @@ function ScrollExample2() {
             max-height: calc(100vh - 200px);
             padding: 100px;
             position: relative;
-          `,
-        )}
+          `}
       >
         <button
           ref={buttonRef}
@@ -232,31 +224,19 @@ function ScrollExample2() {
         </button>
       </div>
 
-      {exampleIsScrollable ? (
-        <Popover
+      <Popover
           align={select('Align', Object.values(Align), 'top')}
           justify={select('justify', Object.values(Justify), 'middle')}
           spacing={number('spacing', 10)}
           adjustOnMutation={boolean('adjustOnMutation', true)}
-          portalContainer={portalContainer}
+          // portalContainer={portalContainer} // no bug if using this scroll container
           scrollContainer={portalContainer}
           active={active}
           refEl={buttonRef}
+          usePortal={true}
         >
           <div className={popoverStyle}>Popover content</div>
         </Popover>
-      ) : (
-        <Popover
-          align={select('Align', Object.values(Align), 'top')}
-          justify={select('justify', Object.values(Justify), 'middle')}
-          spacing={number('spacing', 10)}
-          adjustOnMutation={boolean('adjustOnMutation', true)}
-          active={active}
-          refEl={buttonRef}
-        >
-          <div className={popoverStyle}>Popover content</div>
-        </Popover>
-      )}
     </>
   );
 }

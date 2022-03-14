@@ -96,8 +96,10 @@ function Popover({
   let referenceElement: HTMLElement | null = null;
 
   if (refEl && refEl.current) {
+    console.log('ref current');
     referenceElement = refEl.current;
   } else if (placeholderNode) {
+    console.log('placeholder');
     const parent = placeholderNode.parentNode;
 
     if (parent && parent instanceof HTMLElement) {
@@ -133,9 +135,13 @@ function Popover({
     getElementViewportPosition(referenceElement, scrollContainer),
   );
 
+  console.log('referenceElViewportPos', {referenceElViewportPos});
+
   const contentElViewportPos = useObjectDependency(
     getElementViewportPosition(contentNode, scrollContainer),
   );
+
+  console.log('contentElViewportPos', {contentElViewportPos});
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
@@ -212,6 +218,8 @@ function Popover({
     contentElViewportPos,
     contentElDocumentPos,
   });
+
+  console.log('🎃 positionCSS', {positionCSS});
 
   const activeStyle = css`
     opacity: 1;

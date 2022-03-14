@@ -86,6 +86,8 @@ export function calculatePosition({
     };
   }
 
+  console.log('🤡 calculatePosition');
+
   return {
     align: windowSafeAlign,
     justify: windowSafeJustify,
@@ -135,7 +137,7 @@ export function getElementDocumentPosition(
     } = scrollContainer.getBoundingClientRect();
 
      // eslint-disable-next-line no-console
-     console.log({top}, {bottom}, {left}, {right});
+     console.log('✨✨getElementDocumentPosition', {top}, {bottom}, {left}, {right});
 
     return {
       top: top + scrollTop - offsetTop,
@@ -179,8 +181,8 @@ export function getElementViewportPosition(
       right: offsetRight,
     } = scrollContainer.getBoundingClientRect();
 
-    // // eslint-disable-next-line no-console
-    // console.log({top}, {bottom}, {left}, {right});
+    // eslint-disable-next-line no-console
+    console.log('getElementViewportPosition ✨',{top}, {bottom}, {left}, {right});
 
     return {
       top: top - offsetTop,
