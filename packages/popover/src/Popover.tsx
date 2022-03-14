@@ -112,6 +112,8 @@ function Popover({
 
   const viewportSize = useViewportSize();
 
+  console.log('🦋🦋', {viewportSize});
+
   // We calculate the position of the popover when it becomes active,
   // so it's safe for us to only enable the mutation observers once the popover is active.
   const observeMutations = adjustOnMutation && active;
