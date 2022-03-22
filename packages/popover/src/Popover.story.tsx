@@ -199,6 +199,7 @@ function ScrollExample2() {
             overflow-y: auto;
             background-color: #eaeaea;
             max-height: calc(100vh - 200px);
+            // max-height: 300px;
             padding: 100px;
             position: relative;
           `}
@@ -224,12 +225,14 @@ function ScrollExample2() {
         </button>
       </div>
 
+      {/* This is a bug, if we are using a scroll container and a portal that is outside of the scroll container then the position of the popover content is incorrect */}
+
       <Popover
           align={select('Align', Object.values(Align), 'top')}
           justify={select('justify', Object.values(Justify), 'middle')}
           spacing={number('spacing', 10)}
           adjustOnMutation={boolean('adjustOnMutation', true)}
-          // portalContainer={portalContainer} // no bug if using this scroll container
+          portalContainer={portalContainer} // no bug if using this scroll container
           scrollContainer={portalContainer}
           active={active}
           refEl={buttonRef}

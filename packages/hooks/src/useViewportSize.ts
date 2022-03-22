@@ -18,9 +18,6 @@ export default function useViewportSize(): ViewportSize | null {
     null,
   );
 
-  // eslint-disable-next-line no-console
-  console.log('😈😈resize😈😈');
-
   useEffect(() => {
     setViewportUpdateVal(getViewportSize());
 

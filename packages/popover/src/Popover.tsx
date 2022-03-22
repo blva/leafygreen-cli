@@ -86,6 +86,19 @@ function Popover({
   portalContainer = portalContainerProp || portalContainer;
   scrollContainer = scrollContainerProp || scrollContainer;
 
+  // TODO: rethink this, the portal container might not be set until the portal is created in <Portal>
+
+  // Check if usePortal is true and a scrollContainer is defined
+  // Produce a warning if the portalContainer is not inside of the scrollContainer
+  if (usePortal && scrollContainer) {
+    // eslint-disable-next-line no-console
+    console.log({portalContainer}, {scrollContainer});
+    // eslint-disable-next-line no-console
+    // console.log(portalContainer === scrollContainer);
+    // eslint-disable-next-line no-console
+    console.log(scrollContainer.contains(portalContainer as HTMLElement));
+  }
+
   // To remove StrictMode warnings produced by react-transition-group we need
   // to pass in a useRef object to the <Transition> component.
   // To do so we're shadowing the contentNode onto this nodeRef as
@@ -96,10 +109,10 @@ function Popover({
   let referenceElement: HTMLElement | null = null;
 
   if (refEl && refEl.current) {
-    console.log('ref current');
+    // console.log('ref current');
     referenceElement = refEl.current;
   } else if (placeholderNode) {
-    console.log('placeholder');
+    // console.log('placeholder');
     const parent = placeholderNode.parentNode;
 
     if (parent && parent instanceof HTMLElement) {
@@ -108,11 +121,11 @@ function Popover({
   }
 
   // eslint-disable-next-line no-console
-  console.log({scrollContainer}, {contentNode}, {referenceElement});
+  // console.log({scrollContainer}, {contentNode}, {referenceElement});
 
   const viewportSize = useViewportSize();
 
-  console.log('🦋🦋', {viewportSize});
+  // console.log('🦋🦋', {viewportSize});
 
   // We calculate the position of the popover when it becomes active,
   // so it's safe for us to only enable the mutation observers once the popover is active.
@@ -137,13 +150,13 @@ function Popover({
     getElementViewportPosition(referenceElement, scrollContainer),
   );
 
-  console.log('referenceElViewportPos', {referenceElViewportPos});
+  // console.log('referenceElViewportPos', {referenceElViewportPos});
 
   const contentElViewportPos = useObjectDependency(
     getElementViewportPosition(contentNode, scrollContainer),
   );
 
-  console.log('contentElViewportPos', {contentElViewportPos});
+  // console.log('contentElViewportPos', {contentElViewportPos});
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
@@ -221,7 +234,7 @@ function Popover({
     contentElDocumentPos,
   });
 
-  console.log('🎃 positionCSS', {positionCSS});
+  // console.log('🎃 positionCSS', {positionCSS});
 
   const activeStyle = css`
     opacity: 1;

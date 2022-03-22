@@ -36,10 +36,13 @@ function ControlledTooltip() {
 
 function ScrolledTooltip() {
   // const [open, setOpen] = useState(true);
+  const [scrollContainerRef, setScrollContainerRef] = useState<HTMLDivElement | null>(
+    null,
+  );
 
-  const scrollContainerRef = useRef(null);
+  // const scrollContainerRef = useRef(null);
   const items = Array.from(Array(9).keys());
-  const exampleIsScrollable = boolean('Example page scrolling', false);
+  // const exampleIsScrollable = boolean('Example page scrolling', true);
 
   const genItems = tooltipText =>
     items.map(id => {
@@ -67,12 +70,12 @@ function ScrolledTooltip() {
               padding: 8px;
             `}
           >
-            {exampleIsScrollable ? (
-              <Tooltip
+             <Tooltip
                 align="top"
                 justify="middle"
                 // Bug #3: Uncomment line below to observe
-                scrollContainer={scrollContainerRef.current}
+                scrollContainer={scrollContainerRef}
+                portalContainer={scrollContainerRef}
                 // Bug #1
                 trigger={
                   <Button
@@ -87,27 +90,6 @@ function ScrolledTooltip() {
                 {/* Bug #2 */}
                 {tooltipText}
               </Tooltip>
-            ) : (
-              <Tooltip
-                align="top"
-                justify="middle"
-                // Bug #3: Uncomment line below to observe
-                // scrollContainer={scrollContainerRef.current}
-                // Bug #1
-                trigger={
-                  <Button
-                    className="Button"
-                    leftGlyph={<Icon glyph="Ellipsis" />}
-                    size="xsmall"
-                  />
-                }
-                triggerEvent="click"
-                darkMode={false}
-              >
-                {/* Bug #2 */}
-                {tooltipText}
-              </Tooltip>
-            )}
           </div>
 
           <div
@@ -130,11 +112,11 @@ function ScrolledTooltip() {
   return (
     <div
       className={cx(
-        {
-          [css`
-            color: black;
-          `]: exampleIsScrollable,
-        },
+        // {
+        //   [css`
+        //     color: black;
+        //   `]: exampleIsScrollable,
+        // },
         css`
           display: flex;
           flex-direction: column;
@@ -146,7 +128,7 @@ function ScrolledTooltip() {
         `,
       )}
     >
-      <h1>LeafyGreen Tooltip Bugs</h1>
+      {/* <h1>LeafyGreen Tooltip Bugs</h1>
       <p>
         A small sandbox to repro some <code>@leafygreen-ui/tooltip</code> bugs
         we have seen in Charts. This example uses a minimal amount of consumer
@@ -171,9 +153,10 @@ function ScrolledTooltip() {
           position gets really screwed up. (Uncomment relevant line in this
           example)
         </li>
-      </ul>
+      </ul> */}
       <div
-        ref={scrollContainerRef}
+        // ref={scrollContainerRef}
+        ref={el => setScrollContainerRef(el)}
         className={css`
           flex: 1 1 100%;
           display: grid;
@@ -186,6 +169,7 @@ function ScrolledTooltip() {
             '. . .'
             '. . .';
           overflow: auto;
+          position: relative;
         `}
       >
         {genItems('Interactive Filters')}

@@ -25,8 +25,6 @@ export default function useMutationObserver<Value>(
       return;
     }
 
-    console.log('🧤🧤mutation🧤🧤');
-
     const observer = new MutationObserver((...args) => {
       setValue(callback(...args));
     });

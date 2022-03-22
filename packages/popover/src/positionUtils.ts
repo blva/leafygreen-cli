@@ -86,7 +86,7 @@ export function calculatePosition({
     };
   }
 
-  console.log('🤡 calculatePosition');
+  // console.log('🤡 calculatePosition');
 
   return {
     align: windowSafeAlign,
@@ -137,7 +137,16 @@ export function getElementDocumentPosition(
     } = scrollContainer.getBoundingClientRect();
 
      // eslint-disable-next-line no-console
-     console.log('✨✨getElementDocumentPosition', {top}, {bottom}, {left}, {right});
+    //  console.log('✨✨getElementDocumentPosition');
+     // eslint-disable-next-line no-console
+     console.dir({
+      top: top + scrollTop - offsetTop,
+      bottom: bottom + scrollTop - offsetBottom,
+      left: left + scrollLeft - offsetLeft,
+      right: right + scrollLeft - offsetRight,
+      height,
+      width,
+    });
 
     return {
       top: top + scrollTop - offsetTop,
@@ -150,6 +159,18 @@ export function getElementDocumentPosition(
   }
 
   const { scrollX, scrollY } = window;
+
+  // eslint-disable-next-line no-console
+  // console.log('✨✨✨✨getElementDocumentPosition');
+  // eslint-disable-next-line no-console
+  console.dir({
+    top: top + scrollY,
+    bottom: bottom + scrollY,
+    left: left + scrollX,
+    right: right + scrollX,
+    height,
+    width,
+ });
 
   return {
     top: top + scrollY,
@@ -182,7 +203,16 @@ export function getElementViewportPosition(
     } = scrollContainer.getBoundingClientRect();
 
     // eslint-disable-next-line no-console
-    console.log('getElementViewportPosition ✨',{top}, {bottom}, {left}, {right});
+    // console.log('getElementViewportPosition ✨✨✨');
+    // eslint-disable-next-line no-console
+    console.dir({
+      top: top - offsetTop,
+      bottom: bottom - offsetBottom,
+      left: left - offsetLeft,
+      right: right - offsetRight,
+      height,
+      width,
+    });
 
     return {
       top: top - offsetTop,
@@ -193,6 +223,18 @@ export function getElementViewportPosition(
       width,
     };
   }
+
+  // eslint-disable-next-line no-console
+  // console.log('getElementViewportPosition ✨✨✨✨✨✨');
+  // eslint-disable-next-line no-console
+  console.dir({
+    top,
+    bottom,
+    left,
+    right,
+    height,
+    width,
+  });
 
   return {
     top,
