@@ -49,6 +49,16 @@ const scrollableStyle = css`
   padding-top: 50vh;
 `;
 
+const scrollContainerStyles = css`
+  margin: 150px;
+  width: 100%;
+  overflow-y: auto;
+  background-color: #eaeaea;
+  max-height: calc(100vh - 200px);
+  padding: 100px;
+  position: relative;
+`;
+
 function DefaultExample() {
   const [active, setActive] = useState(false);
   const exampleIsScrollable = boolean('Example page scrolling', false);
@@ -123,8 +133,8 @@ function AdvancedExample() {
   );
 }
 
-function ScrollExample() {
-  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(
+function ScrollContainerExample() {
+  const [scrollContainer, setScrollContainer] = useState<HTMLDivElement | null>(
     null,
   );
   const [active, setActive] = useState(false);
@@ -133,16 +143,9 @@ function ScrollExample() {
   return (
     <>
       <div
-        ref={el => setPortalContainer(el)}
-        className={css`
-          margin: 150px;
-          width: 100%;
-          overflow-y: auto;
-          background-color: #eaeaea;
-          max-height: calc(100vh - 200px);
-          padding: 100px;
-          position: relative;
-        `}
+        // use callback ref since refs are not set until a component has rendered
+        ref={el => setScrollContainer(el)}
+        className={scrollContainerStyles}
       >
         <button
           ref={buttonRef}
@@ -161,7 +164,7 @@ function ScrollExample() {
             ],
           )}
         >
-          {text('Button Content', 'Popover')}
+          {text('Button Content', 'Popover trigger')}
         </button>
       </div>
 
@@ -170,8 +173,8 @@ function ScrollExample() {
         justify={select('justify', Object.values(Justify), 'start')}
         spacing={number('spacing', 10)}
         adjustOnMutation={boolean('adjustOnMutation', false)}
-        portalContainer={portalContainer}
-        scrollContainer={portalContainer}
+        portalContainer={scrollContainer}
+        scrollContainer={scrollContainer}
         active={active}
         refEl={buttonRef}
       >
@@ -181,71 +184,7 @@ function ScrollExample() {
   );
 }
 
-function ScrollExample2() {
-  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(
-    null,
-  );
-  const [active, setActive] = useState(false);
-  const buttonRef = useRef(null);
-
-  return (
-    <>
-      <div
-        ref={el => setPortalContainer(el)}
-        className={
-          css`
-            margin: 150px;
-            width: 100%;
-            overflow-y: auto;
-            background-color: #eaeaea;
-            max-height: calc(100vh - 200px);
-            // max-height: 300px;
-            padding: 100px;
-            position: relative;
-          `}
-      >
-        <button
-          ref={buttonRef}
-          onClick={() => setActive(curr => !curr)}
-          className={cx(
-            containerStyle,
-            css`
-              margin-bottom: 200vh;
-            `,
-            referenceElPositions[
-              select(
-                'Reference Element Position',
-                ['centered', 'top', 'right', 'bottom', 'left'],
-                'centered',
-              )
-            ],
-          )}
-        >
-          {text('Button Content', 'Popover')}
-        </button>
-      </div>
-
-      {/* This is a bug, if we are using a scroll container and a portal that is outside of the scroll container then the position of the popover content is incorrect */}
-
-      <Popover
-          align={select('Align', Object.values(Align), 'top')}
-          justify={select('justify', Object.values(Justify), 'middle')}
-          spacing={number('spacing', 10)}
-          adjustOnMutation={boolean('adjustOnMutation', true)}
-          portalContainer={portalContainer} // no bug if using this scroll container
-          scrollContainer={portalContainer}
-          active={active}
-          refEl={buttonRef}
-          usePortal={true}
-        >
-          <div className={popoverStyle}>Popover content</div>
-        </Popover>
-    </>
-  );
-}
-
 storiesOf('Popover', module)
   .add('Default', () => <DefaultExample />)
   .add('Advanced', () => <AdvancedExample />)
-  .add('Scroll Container', () => <ScrollExample />)
-  .add('Scroll Test', () => <ScrollExample2 />);
+  .add('Scroll Container', () => <ScrollContainerExample />);
