@@ -29,7 +29,8 @@
     "**/*.tsx",
     "components/**/*.tsx",
     "utils/*.tsx",
-    "pages/*.tsx"
+    "pages/*.tsx",
+    "../packages/**/src/*.tsx"
   ],
   "exclude": ["node_modules"]
 }
