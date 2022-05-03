@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
@@ -16,25 +16,6 @@ function DefaultLayout({ children }) {
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const layout = router.pathname.split('/').filter(substr => !!substr)[0];
-
-  useEffect(() => {
-    document.querySelectorAll('a, button').forEach(e => {
-      // @ts-ignore
-      e.onclick = e => {
-        const today = new Date();
-
-        if (
-          !localStorage.getItem('yaDoneBeenRolled') &&
-          today.getDate() == 1 &&
-          today.getMonth() == 3
-        ) {
-          e.preventDefault();
-          window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
-          localStorage.setItem('yaDoneBeenRolled', 'rolled asf');
-        }
-      };
-    });
-  }, []);
 
   let SubLayout: React.FunctionComponent;
 
@@ -89,7 +70,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Global styles={globalStyles} />
-
       <BaseLayout>
         <SubLayout>
           <Component {...pageProps} />
