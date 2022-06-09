@@ -108,6 +108,11 @@ const chipButton = css`
   }
 `;
 
+const chipInlineDefinitionStyles = css`
+  z-index: 1;
+  max-width: 220px;
+`;
+
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   ({ displayName, isFocused, onRemove, onFocus }: ChipProps, forwardedRef) => {
     const {
@@ -206,7 +211,12 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       >
         <span className={chipText}>
           {truncatedName ? (
-            <InlineDefinition definition={displayName} align="bottom">
+            <InlineDefinition
+              definition={displayName}
+              align="bottom"
+              open={true}
+              portalClassName={chipInlineDefinitionStyles}
+            >
               {truncatedName}
             </InlineDefinition>
           ) : (

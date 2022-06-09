@@ -118,6 +118,7 @@ export const comboboxStyle = css`
   cursor: text;
   transition: 150ms ease-in-out;
   transition-property: background-color, box-shadow, border-color;
+  position: relative;
 
   &[data-disabled='true'] {
     color: var(--lg-combobox-text-color-disabled);

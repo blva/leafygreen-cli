@@ -8,6 +8,7 @@ import React, {
 import { clone, isArray, isEqual, isNull, isString, isUndefined } from 'lodash';
 import { Description, Label } from '@leafygreen-ui/typography';
 import Popover from '@leafygreen-ui/popover';
+import { PortalContextProvider } from '@leafygreen-ui/leafygreen-provider';
 import {
   useAvailableSpace,
   useDynamicRefs,
@@ -1270,7 +1271,14 @@ export default function Combobox<M extends boolean>({
               value: inputValue,
             })}
           >
-            {renderedChips}
+            <PortalContextProvider
+              popover={{
+                portalContainer: comboboxRef.current,
+                scrollContainer: comboboxRef.current,
+              }}
+            >
+              {renderedChips}
+            </PortalContextProvider>
             <input
               aria-label={ariaLabel ?? label}
               aria-autocomplete="list"
