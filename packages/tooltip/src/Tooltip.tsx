@@ -161,6 +161,11 @@ export type TooltipProps = Omit<
      * @default: true
      */
     enabled?: boolean;
+
+    /**
+     * `className` prop passed to the Popover component instance
+     */
+    popoverClassName?: string;
   };
 
 const stopClickPropagation = (evt: React.MouseEvent) => {
@@ -194,6 +199,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.id id given to Tooltip content.
  * @param props.usePortal Determines whether or not Tooltip will be Portaled
  * @param props.portalClassName Classname applied to root element of the portal.
+ * @param props.popoverClassName Classname applied to popover container.
  */
 function Tooltip({
   open: controlledOpen,
@@ -215,6 +221,7 @@ function Tooltip({
   scrollContainer,
   popoverZIndex,
   refEl,
+  popoverClassName,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -344,7 +351,9 @@ function Tooltip({
       justify={justify}
       adjustOnMutation={true}
       onClick={stopClickPropagation}
-      className={cx({
+      className={cx(
+        popoverClassName,
+        {
         [css`
           // Try to fit all the content on one line (until it hits max-width)
           // Overrides default behavior, which is to set width to size of the trigger

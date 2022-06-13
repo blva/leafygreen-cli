@@ -22,6 +22,8 @@ export function notchPositionStyles({
     };
   }
 
+  console.log({align}, {justify}, triggerRect);
+
   const containerSize = notchWidth;
   const notchOverlap = -(containerSize - notchHeight) / 2;
 

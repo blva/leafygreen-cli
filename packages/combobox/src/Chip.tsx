@@ -110,7 +110,7 @@ const chipButton = css`
 
 const chipInlineDefinitionStyles = css`
   z-index: 1;
-  max-width: 220px;
+  // max-width: 220px;
 `;
 
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
@@ -215,7 +215,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
               definition={displayName}
               align="bottom"
               open={true}
-              portalClassName={chipInlineDefinitionStyles}
+              popoverClassName={chipInlineDefinitionStyles}
             >
               {truncatedName}
             </InlineDefinition>

@@ -58,6 +58,10 @@ type InlineDefinitionProps = Partial<TooltipProps> & {
    * `className` prop passed to the Tooltip component instance
    */
   tooltipClassName?: string;
+  /**
+   * `className` prop passed to the Popover component instance
+   */
+  popoverClassName?: string;
 };
 
 /**
@@ -65,6 +69,7 @@ type InlineDefinitionProps = Partial<TooltipProps> & {
  *
  * @param props.definition Content that appears in the tooltip.
  * @param props.tooltipClassName Class name applied to tooltip container.
+ * @param props.popoverClassName Class name applied to popover container.
  */
 
 function InlineDefinition({
@@ -72,6 +77,7 @@ function InlineDefinition({
   children,
   className,
   tooltipClassName,
+  popoverClassName,
   darkMode = false,
   ...tooltipProps
 }: InlineDefinitionProps) {
