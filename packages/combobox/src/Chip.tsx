@@ -214,7 +214,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
             <InlineDefinition
               definition={displayName}
               align="bottom"
-              open={true}
+              // open={true}
               popoverClassName={chipInlineDefinitionStyles}
             >
               {truncatedName}

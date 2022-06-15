@@ -293,6 +293,7 @@ function Popover({
                   [css`
                     z-index: ${popoverZIndex};
                   `]: typeof popoverZIndex === 'number',
+                  [css`width: fit-content;`]: justify !== 'fit' && scrollContainer !== null
                 },
                 className,
               )}

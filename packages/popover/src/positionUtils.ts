@@ -50,12 +50,15 @@ export function calculatePosition({
 } {
   // Use scrollContainer width and height instead of window width and height when a scrollContainer is set
   // so we can correctly determine if the content element is safely within the "window"
-  const windowContainerWidth = scrollContainer
-    ? scrollContainer.offsetWidth
-    : windowWidth;
-  const windowContainerHeight = scrollContainer
-    ? scrollContainer.offsetHeight
-    : windowHeight;
+  // const windowContainerWidth = scrollContainer
+  //   ? scrollContainer.offsetWidth
+  //   : windowWidth;
+  // const windowContainerHeight = scrollContainer
+  //   ? scrollContainer.offsetHeight
+  //   : windowHeight;
+
+    const windowContainerWidth = windowWidth;
+  const windowContainerHeight = windowHeight;
 
   const windowSafeCommonArgs = {
     windowWidth: windowContainerWidth,
