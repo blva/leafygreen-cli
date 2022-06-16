@@ -21,6 +21,10 @@ interface WindowSize {
   windowHeight: number;
 }
 
+interface ScrollContainerSize {
+  scrollContainerWidth?: number | null | undefined;
+}
+
 interface CalculatePosition
   extends Required<ElementPositions>,
     Partial<WindowSize> {
@@ -57,7 +61,10 @@ export function calculatePosition({
   //   ? scrollContainer.offsetHeight
   //   : windowHeight;
 
-    const windowContainerWidth = windowWidth;
+  const scrollContainerWidth = scrollContainer ? scrollContainer.offsetWidth : null;
+
+  // remove vars after testing
+  const windowContainerWidth = windowWidth;
   const windowContainerHeight = windowHeight;
 
   const windowSafeCommonArgs = {
@@ -127,6 +134,7 @@ export function calculatePosition({
         spacing,
         windowHeight: windowContainerHeight,
         windowWidth: windowContainerWidth,
+        scrollContainerWidth
       }),
       transformOrigin,
       transform,
@@ -417,7 +425,7 @@ function calcRelativePosition({
   };
 }
 
-type CalcAbsolutePositionArgs = CalcPositionArgs & WindowSize;
+type CalcAbsolutePositionArgs = CalcPositionArgs & WindowSize & ScrollContainerSize;
 
 function calcAbsolutePosition({
   align,
@@ -427,6 +435,7 @@ function calcAbsolutePosition({
   spacing,
   windowWidth,
   windowHeight,
+  scrollContainerWidth,
 }: CalcAbsolutePositionArgs): AbsolutePositionObject {
   const leftNum = calcLeft({
     align,
@@ -462,10 +471,12 @@ function calcAbsolutePosition({
     };
   }
 
+  const containerWidth = scrollContainerWidth ?? windowWidth;
+
   return {
     left,
     top,
-    right: `${windowWidth - (leftNum + referenceElDocumentPos.width)}px`, // take the left position of the content element and add the width of the reference element. This is where we want the right position of the content element to be. To get the equivalent right position minus this number from the container width.
+    right: `${containerWidth - (leftNum + referenceElDocumentPos.width)}px`, // take the left position of the content element and add the width of the reference element. This is where we want the right position of the content element to be. To get the equivalent right position minus this number from the container width.
   };
 }
 
