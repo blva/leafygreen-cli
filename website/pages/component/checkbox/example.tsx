@@ -1,6 +1,7 @@
 import React from 'react';
 import Checkbox from '@leafygreen-ui/checkbox';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+import { css, cx } from '@emotion/css';
 
 const knobsConfig: KnobsConfigInterface<{
   darkMode: boolean;
@@ -45,7 +46,27 @@ const knobsConfig: KnobsConfigInterface<{
 export default function CheckboxLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {props => <Checkbox {...props} />}
+      {({ darkMode, ...rest }) => (
+        <Checkbox
+          {...rest}
+          darkMode={darkMode}
+          className={cx(
+            // Placeholder CSS, overriding styles from the latest Typography updates which this component should not be using as yet. When this component is updated to use Typography v12.0.0 then these styles can be removed.
+            {
+              [css`
+                input + div {
+                  margin-top: 0px;
+                }
+              `]: darkMode,
+              [css`
+                input + div {
+                  margin-top: 3px;
+                }
+              `]: !darkMode,
+            },
+          )}
+        />
+      )}
     </LiveExample>
   );
 }
